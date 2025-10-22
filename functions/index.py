@@ -13,6 +13,7 @@ def handler(event, context):
         return {"statusCode": 200, "headers": {"Content-Type": "text/html"}, "body": html}
     
     if method == "POST":
+        # Parse form data
         body = parse_qs(event.get("body") or "")
         project_name = body.get("project_name", ["temp_project"])[0]
         code = body.get("code", [""])[0]
@@ -21,12 +22,13 @@ def handler(event, context):
         project_path = os.path.join(tempfile.gettempdir(), project_name)
         os.makedirs(project_path, exist_ok=True)
 
-        # Save code or generate from description
+        # Save code from editor
         if code:
             with open(os.path.join(project_path, "app.py"), "w") as f:
                 f.write(code)
             with open(os.path.join(project_path, "requirements.txt"), "w") as f:
                 f.write("")
+        # Generate from description
         elif description:
             code_generator.generate_code_from_description(description, project_path)
 
