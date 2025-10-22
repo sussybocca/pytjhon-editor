@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import os
-import shutil
+import tempfile
 
 from builder import run_project, auto_fix, code_generator
 
@@ -11,7 +11,8 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-PROJECTS_DIR = "projects"
+# Use ephemeral storage for Netlify
+PROJECTS_DIR = os.path.join(tempfile.gettempdir(), "projects")
 os.makedirs(PROJECTS_DIR, exist_ok=True)
 
 @app.get("/", response_class=HTMLResponse)
