@@ -10,7 +10,7 @@ def handler(event, context):
     project_path = os.path.join(tempfile.gettempdir(), project_name)
     output = auto_fix.auto_fix_code(project_path)
 
-    # Simple HTML response
+    # HTML response
     html = f"""
     <!DOCTYPE html>
     <html>
