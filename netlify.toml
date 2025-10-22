@@ -1,6 +1,9 @@
 [build]
   command = "pip install -r requirements.txt"
-  publish = "."  # folder for static files if any
+  publish = "."
 
 [dev]
-  command = "uvicorn main:app --host 0.0.0.0 --port 8000"
+  command = "uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
