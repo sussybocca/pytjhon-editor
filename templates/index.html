@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Livo - Python IDE</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+</head>
+<body>
+    <h1>Livo - Local Python IDE</h1>
+    <form action="/create_project" method="post" enctype="multipart/form-data">
+        <input type="text" name="project_name" placeholder="Project name" required><br><br>
+
+        <label>Upload app.py:</label>
+        <input type="file" name="app_file"><br><br>
+        <label>Upload requirements.txt:</label>
+        <input type="file" name="req_file"><br><br>
+
+        <label>Or enter description:</label><br>
+        <textarea name="description" placeholder="Describe your app" rows="3" cols="50"></textarea><br><br>
+
+        <label>Or code directly:</label><br>
+        <div id="editor" style="height:300px;border:1px solid #ccc;"></div>
+        <input type="hidden" name="code" id="code_input">
+
+        <br>
+        <button type="submit" onclick="saveCode()">Create & Run</button>
+    </form>
+
+    <script>
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        window.editor = monaco.editor.create(document.getElementById('editor'), {
+            value: "# Write Python code here",
+            language: "python",
+            theme: "vs-dark"
+        });
+    });
+    function saveCode(){
+        document.getElementById("code_input").value = window.editor.getValue();
+    }
+    </script>
+</body>
+</html>

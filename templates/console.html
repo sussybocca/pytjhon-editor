@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Console - Livo</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Console - Project: {{ project }}</h1>
+    <form action="/run" method="post">
+        <input type="hidden" name="project" value="{{ project }}">
+        <button type="submit">Run Project (Auto-fix enabled)</button>
+    </form>
+    <pre id="output">Output will appear here...</pre>
+</body>
+</html>
